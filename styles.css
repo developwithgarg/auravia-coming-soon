@@ -1,0 +1,425 @@
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Lato', sans-serif;
+    background-color: #FAF6F0;
+    color: #333;
+    line-height: 1.6;
+    overflow-x: hidden;
+    position: relative;
+    min-height: 100vh;
+}
+
+/* Watermark */
+.watermark {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Playfair Display', serif;
+    font-size: 40vw;
+    font-weight: 300;
+    color: rgba(212, 175, 55, 0.03);
+    z-index: 0;
+    pointer-events: none;
+    user-select: none;
+}
+
+/* Container */
+.container {
+    position: relative;
+    z-index: 1;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+/* Header */
+.header {
+    margin-bottom: 4rem;
+}
+
+.logo-container {
+    margin-bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.brand-logo {
+    max-height: 350px;
+    max-width: 350px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    transition: all 0.3s ease;
+    opacity: 0.95;
+}
+
+.brand-logo:hover {
+    transform: scale(1.05);
+    opacity: 1;
+}
+
+.brand-name {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.5rem, 7vw, 4.5rem);
+    font-weight: 700;
+    color: #333;
+    letter-spacing: 0.18em;
+    margin-bottom: 1rem;
+    margin-top: -4rem;
+    text-shadow: 0 2px 4px rgba(212, 175, 55, 0.1);
+    position: relative;
+    z-index: 2;
+}
+
+.brand-name::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 120px;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, #D4AF37, transparent);
+    border-radius: 2px;
+}
+
+.tagline {
+    font-size: clamp(0.9rem, 2vw, 1.1rem);
+    color: #666;
+    font-weight: 300;
+    letter-spacing: 0.05em;
+    position: relative;
+    padding-bottom: 1rem;
+}
+
+.tagline::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #F8E4E9, transparent);
+}
+
+/* Main Content */
+.main-content {
+    max-width: 800px;
+    margin-bottom: 4rem;
+}
+
+.main-heading {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 2rem;
+    letter-spacing: 0.02em;
+}
+
+.description {
+    margin-bottom: 3rem;
+}
+
+.description p {
+    font-size: clamp(1rem, 2.5vw, 1.2rem);
+    color: #555;
+    margin-bottom: 1rem;
+    font-weight: 300;
+    line-height: 1.8;
+}
+
+/* Email Signup Section */
+.signup-section {
+    margin-bottom: 3rem;
+}
+
+.email-form {
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.form-group {
+    display: flex;
+    gap: 0;
+    margin-bottom: 1rem;
+    border: 2px solid #D4AF37;
+    border-radius: 50px;
+    overflow: hidden;
+    background: white;
+    box-shadow: 0 4px 20px rgba(212, 175, 55, 0.1);
+    transition: all 0.3s ease;
+}
+
+.form-group:focus-within {
+    box-shadow: 0 6px 30px rgba(212, 175, 55, 0.2);
+    transform: translateY(-2px);
+}
+
+#email {
+    flex: 1;
+    padding: 1rem 1.5rem;
+    border: none;
+    outline: none;
+    font-size: 1rem;
+    background: transparent;
+    color: #333;
+}
+
+#email::placeholder {
+    color: #999;
+    font-weight: 300;
+}
+
+.notify-btn {
+    padding: 1rem 2rem;
+    background: linear-gradient(135deg, #D4AF37, #B8941F);
+    color: white;
+    border: none;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    letter-spacing: 0.05em;
+}
+
+.notify-btn:hover {
+    background: linear-gradient(135deg, #F8E4E9, #E8C4D0);
+    color: #333;
+    transform: translateX(-2px);
+    box-shadow: 0 4px 20px rgba(248, 228, 233, 0.4);
+}
+
+.notify-btn:active {
+    transform: scale(0.98);
+}
+
+.form-message {
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.form-message.success {
+    color: #28a745;
+    opacity: 1;
+}
+
+.form-message.error {
+    color: #dc3545;
+    opacity: 1;
+}
+
+/* Social Media Section */
+.social-section {
+    margin-bottom: 2rem;
+}
+
+.social-heading {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.2rem, 3vw, 1.5rem);
+    color: #333;
+    margin-bottom: 1.5rem;
+    font-weight: 500;
+}
+
+.social-icons {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+}
+
+.social-icons a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    background: white;
+    color: #D4AF37;
+    border: 2px solid #D4AF37;
+    border-radius: 50%;
+    text-decoration: none;
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 10px rgba(212, 175, 55, 0.1);
+}
+
+.social-icons a:hover {
+    background: #F8E4E9;
+    color: #D4AF37;
+    transform: translateY(-3px);
+    box-shadow: 0 4px 20px rgba(248, 228, 233, 0.3);
+}
+
+/* Footer */
+.footer {
+    margin-top: auto;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(212, 175, 55, 0.2);
+}
+
+.footer-tagline {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1rem, 2.5vw, 1.3rem);
+    color: #333;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+.footer-contact {
+    font-size: clamp(0.9rem, 2vw, 1rem);
+    color: #666;
+    font-weight: 300;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        padding: 1.5rem;
+    }
+    
+    .header {
+        margin-bottom: 3rem;
+    }
+    
+    .brand-logo {
+        max-height: 250px;
+        max-width: 250px;
+    }
+    
+    .brand-name {
+        font-size: clamp(2rem, 6vw, 3rem);
+        letter-spacing: 0.12em;
+        margin-top: -3rem;
+    }
+    
+    .brand-name::after {
+        width: 100px;
+        height: 2px;
+    }
+    
+    .main-content {
+        margin-bottom: 3rem;
+    }
+    
+    .form-group {
+        flex-direction: column;
+        border-radius: 25px;
+    }
+    
+    .notify-btn {
+        border-radius: 0 0 25px 25px;
+    }
+    
+    #email {
+        border-radius: 25px 25px 0 0;
+    }
+    
+    .social-icons {
+        gap: 1rem;
+    }
+    
+    .social-icons a {
+        width: 45px;
+        height: 45px;
+        font-size: 1.1rem;
+    }
+    
+    .watermark {
+        font-size: 50vw;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 1rem;
+    }
+    
+    .brand-logo {
+        max-height: 180px;
+        max-width: 180px;
+    }
+    
+    .brand-name {
+        font-size: clamp(1.8rem, 5vw, 2.5rem);
+        letter-spacing: 0.1em;
+        margin-top: -2rem;
+    }
+    
+    .brand-name::after {
+        width: 80px;
+        height: 2px;
+    }
+    
+    .tagline::after {
+        width: 80px;
+    }
+    
+    .social-icons {
+        gap: 0.8rem;
+    }
+    
+    .social-icons a {
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+    }
+}
+
+/* High-resolution displays */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .brand-name::after,
+    .social-icons a,
+    .notify-btn {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+}
+
+/* Animation for page load */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.container > * {
+    animation: fadeInUp 0.8s ease-out forwards;
+}
+
+.header {
+    animation-delay: 0.1s;
+}
+
+.main-content {
+    animation-delay: 0.2s;
+}
+
+.footer {
+    animation-delay: 0.3s;
+}

@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auravia - Email Subscribers Admin</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #FAF6F0;
+            color: #333;
+            line-height: 1.6;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #D4AF37;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.1);
+            border: 1px solid #F8E4E9;
+            text-align: center;
+        }
+
+        .stat-card h3 {
+            font-size: 2rem;
+            color: #D4AF37;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-card p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #D4AF37, #B8941F);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #F8E4E9, #E8C4D0);
+            color: #333;
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #D4AF37;
+            border: 1px solid #D4AF37;
+        }
+
+        .btn-secondary:hover {
+            background: #F8E4E9;
+        }
+
+        .search-box {
+            padding: 0.8rem 1rem;
+            border: 1px solid #D4AF37;
+            border-radius: 25px;
+            outline: none;
+            font-size: 0.9rem;
+            width: 300px;
+        }
+
+        .table-container {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #F8E4E9;
+        }
+
+        th {
+            background: linear-gradient(135deg, #D4AF37, #B8941F);
+            color: white;
+            font-weight: 600;
+        }
+
+        tr:hover {
+            background: #FAF6F0;
+        }
+
+        .status-active {
+            color: #28a745;
+            font-weight: 600;
+        }
+
+        .status-inactive {
+            color: #dc3545;
+            font-weight: 600;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 3rem;
+            color: #666;
+        }
+
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 1rem;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+        }
+
+        .success {
+            background: #d4edda;
+            color: #155724;
+            padding: 1rem;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .search-box {
+                width: 100%;
+            }
+
+            table {
+                font-size: 0.9rem;
+            }
+
+            th, td {
+                padding: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Auravia Email Subscribers</h1>
+            <p>Manage your coming soon page email list</p>
+        </div>
+
+        <div id="message"></div>
+
+        <div class="stats-grid" id="statsGrid">
+            <div class="stat-card">
+                <h3 id="totalSubscribers">-</h3>
+                <p>Total Subscribers</p>
+            </div>
+            <div class="stat-card">
+                <h3 id="activeSubscribers">-</h3>
+                <p>Active Subscribers</p>
+            </div>
+            <div class="stat-card">
+                <h3 id="todaySignups">-</h3>
+                <p>Today's Signups</p>
+            </div>
+            <div class="stat-card">
+                <h3 id="weekSignups">-</h3>
+                <p>This Week</p>
+            </div>
+            <div class="stat-card">
+                <h3 id="monthSignups">-</h3>
+                <p>This Month</p>
+            </div>
+        </div>
+
+        <div class="controls">
+            <div>
+                <button class="btn btn-primary" onclick="refreshData()">Refresh Data</button>
+                <button class="btn btn-secondary" onclick="exportSubscribers()">Export CSV</button>
+            </div>
+            <input type="text" class="search-box" placeholder="Search by email..." id="searchInput" onkeyup="filterTable()">
+        </div>
+
+        <div class="table-container">
+            <table id="subscribersTable">
+                <thead>
+                    <tr>
+                        <th>Email</th>
+                        <th>Subscribed Date</th>
+                        <th>Status</th>
+                        <th>Confirmed</th>
+                    </tr>
+                </thead>
+                <tbody id="subscribersBody">
+                    <tr>
+                        <td colspan="4" class="loading">Loading subscribers...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        let subscribersData = [];
+
+        // Load initial data
+        document.addEventListener('DOMContentLoaded', function() {
+            loadStats();
+            loadSubscribers();
+        });
+
+        async function loadStats() {
+            try {
+                const response = await fetch('/api/stats');
+                const data = await response.json();
+
+                if (data.success) {
+                    document.getElementById('totalSubscribers').textContent = data.data.total_subscribers || '0';
+                    document.getElementById('activeSubscribers').textContent = data.data.active_subscribers || '0';
+                    document.getElementById('todaySignups').textContent = data.data.today_signups || '0';
+                    document.getElementById('weekSignups').textContent = data.data.week_signups || '0';
+                    document.getElementById('monthSignups').textContent = data.data.month_signups || '0';
+                }
+            } catch (error) {
+                console.error('Error loading stats:', error);
+                showMessage('Error loading statistics', 'error');
+            }
+        }
+
+        async function loadSubscribers() {
+            try {
+                const response = await fetch('/api/export');
+                const data = await response.json();
+
+                if (data.success) {
+                    subscribersData = data.data;
+                    renderTable(subscribersData);
+                } else {
+                    showMessage('Error loading subscribers: ' + data.message, 'error');
+                }
+            } catch (error) {
+                console.error('Error loading subscribers:', error);
+                showMessage('Error loading subscribers', 'error');
+                document.getElementById('subscribersBody').innerHTML = 
+                    '<tr><td colspan="4" class="error">Failed to load subscribers</td></tr>';
+            }
+        }
+
+        function renderTable(data) {
+            const tbody = document.getElementById('subscribersBody');
+            
+            if (data.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="4" class="loading">No subscribers found</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = data.map(subscriber => `
+                <tr>
+                    <td>${subscriber.email}</td>
+                    <td>${new Date(subscriber.subscribed_at).toLocaleString()}</td>
+                    <td class="${subscriber.is_active ? 'status-active' : 'status-inactive'}">
+                        ${subscriber.is_active ? 'Active' : 'Inactive'}
+                    </td>
+                    <td>${subscriber.confirmed ? '✓ Confirmed' : '⚠ Pending'}</td>
+                </tr>
+            `).join('');
+        }
+
+        function filterTable() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const filteredData = subscribersData.filter(subscriber => 
+                subscriber.email.toLowerCase().includes(searchTerm)
+            );
+            renderTable(filteredData);
+        }
+
+        function refreshData() {
+            loadStats();
+            loadSubscribers();
+            showMessage('Data refreshed successfully', 'success');
+        }
+
+        function exportSubscribers() {
+            if (subscribersData.length === 0) {
+                showMessage('No data to export', 'error');
+                return;
+            }
+
+            const csvContent = [
+                ['Email', 'Subscribed Date', 'Status', 'Confirmed'].join(','),
+                ...subscribersData.map(subscriber => [
+                    subscriber.email,
+                    new Date(subscriber.subscribed_at).toISOString(),
+                    subscriber.is_active ? 'Active' : 'Inactive',
+                    subscriber.confirmed ? 'Confirmed' : 'Pending'
+                ].join(','))
+            ].join('\n');
+
+            const blob = new Blob([csvContent], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `auravia-subscribers-${new Date().toISOString().split('T')[0]}.csv`;
+            link.click();
+            window.URL.revokeObjectURL(url);
+
+            showMessage('Subscribers exported successfully', 'success');
+        }
+
+        function showMessage(message, type) {
+            const messageDiv = document.getElementById('message');
+            messageDiv.className = type;
+            messageDiv.textContent = message;
+            messageDiv.style.display = 'block';
+
+            setTimeout(() => {
+                messageDiv.style.display = 'none';
+            }, 5000);
+        }
+    </script>
+</body>
+</html>
