@@ -80,7 +80,7 @@ async function initializeDatabase() {
                 id SERIAL PRIMARY KEY,
                 email VARCHAR(255) UNIQUE NOT NULL,
                 subscribed_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
-                ip_address INET,
+                ip_address VARCHAR(45),
                 user_agent TEXT,
                 is_active BOOLEAN DEFAULT true,
                 confirmed BOOLEAN DEFAULT false,
